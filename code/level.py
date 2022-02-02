@@ -1,5 +1,6 @@
 import pygame
 from camera import Camera
+from weapon import Weapon
 from settings import *
 from tile import Tile
 from player import Player
@@ -17,6 +18,8 @@ class Level:
         # sprite group setup
         self.visible_sprites = Camera()
         self.obstacle_sprites = pygame.sprite.Group()
+
+        self.current_attack = None
 
         # sprite setup
         self.create_map()
@@ -61,8 +64,20 @@ class Level:
                                 surface,
                             )
         self.player = Player(
-            (1950, 1200), [self.visible_sprites], self.obstacle_sprites
+            (1950, 1200),
+            [self.visible_sprites],
+            self.obstacle_sprites,
+            self.create_attack,
+            self.destroy_attack,
         )
+
+    def create_attack(self):
+        self.current_attack = Weapon(self.player, [self.visible_sprites])
+
+    def destroy_attack(self):
+        if self.current_attack:
+            self.current_attack.kill()
+        self.current_attack = None
 
     def run(self):
         # update and draw the game
