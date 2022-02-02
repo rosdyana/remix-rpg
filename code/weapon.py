@@ -2,12 +2,15 @@ import pygame
 
 
 class Weapon(pygame.sprite.Sprite):
-    def __init__(self, player, groups):
+    def __init__(self, player, groups, style=None):
         super().__init__(groups)
         direction = player.status.split("_")[0]
 
         # Graphics
-        full_path = f"../graphics/weapons/{player.weapon}/{direction}.png"
+        if style != None:
+            full_path = f"../graphics/particles/{style}/{style}.png"
+        else:
+            full_path = f"../graphics/weapons/{player.weapon}/{direction}.png"
         self.image = pygame.image.load(full_path).convert_alpha()
 
         # Placement
