@@ -13,7 +13,7 @@ class Enemy(Entity):
 		# Graphics setup
 		self.import_graphics(monster_name)
 		self.status = "idle"
-		self.image = self.animations["idle"][self.frame_index]
+		self.image = self.animations[self.status][self.frame_index]
 
 		# Movement
 		self.rect = self.image.get_rect(topleft=pos)
@@ -48,7 +48,9 @@ class Enemy(Entity):
 		distance = self.get_player_distance_direction(player)[0]
 
 		if distance <= self.attack_radius and self.can_attack:
-			self.status = "attack"
+			if self.status != 'attack':
+				self.frame_index = 0
+			self.status = 'attack'
 		elif distance <= self.notice_radius:
 			self.status = "move"
 		else:
@@ -61,7 +63,7 @@ class Enemy(Entity):
 		if distance > 0:
 			direction = (player_vector - enemy_vector).normalize()
 		else:
-			direction = pygame.math.Vector2(0, 0)
+			direction = pygame.math.Vector2()
 
 		return (distance, direction)
 
