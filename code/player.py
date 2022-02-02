@@ -10,7 +10,8 @@ from settings import weapon_data
 class Player(Sprite):
     def __init__(self, pos, groups, obstacle_sprites, create_attack, destroy_attack):
         super().__init__(groups)
-        self.image = pygame.image.load("../graphics/test/player.png").convert_alpha()
+        self.image = pygame.image.load(
+            "../graphics/test/player.png").convert_alpha()
         self.rect = self.image.get_rect(topleft=pos)
         self.hitbox = self.rect.inflate(0, -30)
 
@@ -22,7 +23,6 @@ class Player(Sprite):
 
         # Movement attribute
         self.direction = Vector2()
-        self.speed = 5
         self.attacking = False
         self.attack_cooldown = 400
         self.attack_time = None
@@ -37,6 +37,20 @@ class Player(Sprite):
         self.switch_duration_cooldown = 200
 
         self.obstacle_sprites = obstacle_sprites
+
+        # Stats
+        self.stats = {
+            "health": 100,
+            "energy": 50,
+            "attack": 10,
+            "magic": 4,
+            "speed": 5,
+        }
+
+        self.health = self.stats["health"]
+        self.energy = self.stats["energy"]
+        self.exp = 1
+        self.speed = self.stats["speed"]
 
     def import_player_assets(self):
         character_path = "../graphics/player"
@@ -141,8 +155,8 @@ class Player(Sprite):
 
             if not self.can_switch_weapon:
                 if (
-                    current_time - self.weapon_switch_time
-                    >= self.switch_duration_cooldown
+                        current_time - self.weapon_switch_time
+                        >= self.switch_duration_cooldown
                 ):
                     self.can_switch_weapon = True
 

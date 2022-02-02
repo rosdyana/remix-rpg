@@ -6,6 +6,7 @@ from tile import Tile
 from player import Player
 from debug import debug
 from utils import import_csv_layout, import_folder
+from ui import UI
 import random
 
 
@@ -23,6 +24,8 @@ class Level:
 
         # sprite setup
         self.create_map()
+
+        self.ui = UI()
 
     def create_map(self):
         layouts = {
@@ -48,7 +51,8 @@ class Level:
                                 "invisible",
                             )
                         if style == "grass":
-                            random_grass_image = random.choice(graphics["grass"])
+                            random_grass_image = random.choice(
+                                graphics["grass"])
                             Tile(
                                 (x, y),
                                 [self.visible_sprites, self.obstacle_sprites],
@@ -83,3 +87,4 @@ class Level:
         # update and draw the game
         self.visible_sprites.custom_draw(self.player)
         self.visible_sprites.update()
+        self.ui.display(self.player)

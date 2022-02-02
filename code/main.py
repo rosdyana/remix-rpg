@@ -1,4 +1,5 @@
-import pygame, sys
+import pygame
+import sys
 from level import Level
 from settings import WIDTH, HEIGHT, TITLE, DESCRIPTION, VERSION, FPS
 
