@@ -185,6 +185,9 @@ class Player(Entity):
 	def get_full_weapon_damage(self):
 		return self.stats["attack"] + weapon_data[self.weapon]["damage"]
 
+	def get_full_magic_damage(self):
+		return self.stats["magic"] + magic_data[self.magic]["strength"]
+
 	def animate(self):
 		animation = self.animations[self.status]
 		self.frame_index += self.animation_speed
