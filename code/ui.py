@@ -36,6 +36,11 @@ class UI:
         pygame.draw.rect(self.display_surface, color, current_rect)
         pygame.draw.rect(self.display_surface, UI_BORDER_COLOR, bg_rect, 3)
 
+        # draw text
+        text_surface = self.font.render(f"{str(int(current))}/{max_amount}", True, TEXT_COLOR)
+        text_rect = text_surface.get_rect(center=bg_rect.center)
+        self.display_surface.blit(text_surface, text_rect)
+
     def show_exp(self, exp):
         text_surface = self.font.render(str(int(exp)), True, TEXT_COLOR)
         x = self.display_surface.get_size()[0] - 20

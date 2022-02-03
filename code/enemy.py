@@ -6,7 +6,7 @@ from entity import Entity
 
 
 class Enemy(Entity):
-	def __init__(self, monster_name, pos, groups, obstacle_sprites, damage_player, trigger_death_particles):
+	def __init__(self, monster_name, pos, groups, obstacle_sprites, damage_player, trigger_death_particles, add_xp):
 		super().__init__(groups)
 		self.sprite_type = "enemy"
 		
@@ -37,6 +37,7 @@ class Enemy(Entity):
 		self.attack_time = None
 		self.attack_cooldown = 400
 		self.damage_player = damage_player
+		self.add_xp = add_xp
 
 		self.vulnerable = True
 		self.hit_time = None
@@ -124,6 +125,7 @@ class Enemy(Entity):
 		if self.health <= 0:
 			self.kill()
 			self.trigger_death_particles(self.rect.center, self.monster_name)
+			self.add_xp(self.exp)
 
 	def hit_reaction(self):
 		if not self.vulnerable:

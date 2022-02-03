@@ -22,8 +22,8 @@ UI_BORDER_COLOR = '#111111'
 TEXT_COLOR = '#EEEEEE'
 
 # UI colors
-HEALTH_COLOR = 'green'
-ENERGY_COLOR = 'blue'
+HEALTH_COLOR = '#27ae60'
+ENERGY_COLOR = '#2980b9'
 UI_BORDER_COLOR_ACTIVE = 'gold'
 
 # Weapons
