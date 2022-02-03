@@ -46,6 +46,7 @@ class Player(Entity):
 		self.stats = {
 			"health": 100,
 			"energy": 50,
+			"energy_recovery": 0.05,
 			"attack": 10,
 			"magic": 4,
 			"speed": 5,
@@ -199,9 +200,17 @@ class Player(Entity):
 		else:
 			self.image.set_alpha(255)
 
+	def energy_recovery(self):
+		if self.energy < self.stats["energy"]:
+			self.energy += self.stats["energy_recovery"]
+		else:
+			self.energy = self.stats["energy"]
+		
+
 	def update(self):
 		self.input()
 		self.cooldowns()
 		self.get_status()
 		self.animate()
 		self.move(self.speed)
+		self.energy_recovery()
