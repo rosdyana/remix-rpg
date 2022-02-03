@@ -13,6 +13,9 @@ class Game:
         pygame.display.set_caption(f"{TITLE} - {DESCRIPTION} {VERSION}")
         self.clock = pygame.time.Clock()
         self.level = Level()
+        bg_sound = pygame.mixer.Sound("../audio/main.ogg")
+        bg_sound.set_volume(0.4)
+        bg_sound.play(-1)
 
     def run(self) -> None:
         while True:
