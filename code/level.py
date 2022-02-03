@@ -12,7 +12,6 @@ from ui import UI
 from enemy import Enemy
 from random import randint, choice
 from upgrade_menu import UpgradeMenu
-from reset_menu import ResetMenu
 
 
 class Level:
@@ -42,8 +41,6 @@ class Level:
 
         self.animation_player = AnimationPlayer()
         self.magic = Magic(self.animation_player)
-
-        self.reset_menu = ResetMenu()
 
     def create_map(self):
         layouts = {
@@ -177,7 +174,6 @@ class Level:
     def run(self):
         self.visible_sprites.custom_draw(self.player)
         self.ui.display(self.player)
-        self.check_death()
 
         if self.game_paused:
             self.upgrade_menu.display()
