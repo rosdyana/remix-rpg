@@ -4,7 +4,7 @@ import pygame.math
 from pygame.math import Vector2
 from entity import Entity
 from utils import import_folder
-from settings import weapon_data, magic_data
+from settings import weapon_data, magic_data, HITBOX_OFFSET
 
 
 class Player(Entity):
@@ -13,7 +13,7 @@ class Player(Entity):
 		self.image = pygame.image.load(
 			"../graphics/test/player.png").convert_alpha()
 		self.rect = self.image.get_rect(topleft=pos)
-		self.hitbox = self.rect.inflate(0, -30)
+		self.hitbox = self.rect.inflate(-10, HITBOX_OFFSET['player'])
 		self.obstacle_sprites = obstacle_sprites
 
 		# graphics setup
