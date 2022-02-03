@@ -1,7 +1,7 @@
 # RPG with PyGame
 
 <p align="center">
-  <img src="screenshot.png" alt="screenshot">
+  <img src="/screenshot.PNG" alt="screenshot">
 </p>
 
 A clone game of PyGame tutorial by [CC](https://github.com/clear-code-projects/Zelda)
