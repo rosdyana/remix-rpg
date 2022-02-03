@@ -1,5 +1,6 @@
 import pygame
 from camera import Camera
+from animation_player import AnimationPlayer
 from weapon import Weapon
 from settings import *
 from tile import Tile
@@ -8,7 +9,7 @@ from debug import debug
 from utils import import_csv_layout, import_folder
 from ui import UI
 from enemy import Enemy
-import random
+from random import randint, choice
 
 
 class Level:
@@ -30,6 +31,8 @@ class Level:
         self.create_map()
 
         self.ui = UI()
+
+        self.animation_player = AnimationPlayer()
 
     def create_map(self):
         layouts = {
@@ -56,11 +59,12 @@ class Level:
                                 "invisible",
                             )
                         if style == "grass":
-                            random_grass_image = random.choice(
+                            random_grass_image = choice(
                                 graphics["grass"])
                             Tile(
                                 (x, y),
-                                [self.visible_sprites, self.obstacle_sprites, self.attackable_sprites],
+                                [self.visible_sprites, self.obstacle_sprites,
+                                    self.attackable_sprites],
                                 "grass",
                                 random_grass_image,
                             )
@@ -94,13 +98,15 @@ class Level:
                                     monster_name = "squid"
                                 Enemy(
                                     monster_name,
-                                    (x, y), 
+                                    (x, y),
                                     [self.visible_sprites, self.attackable_sprites],
                                     self.obstacle_sprites,
-                                    self.damage_player)
+                                    self.damage_player,
+                                    self.trigger_death_particles)
 
     def create_attack(self):
-        self.current_attack = Weapon(self.player, [self.visible_sprites, self.attack_sprites])
+        self.current_attack = Weapon(
+            self.player, [self.visible_sprites, self.attack_sprites])
 
     def destroy_attack(self):
         if self.current_attack:
@@ -118,19 +124,29 @@ class Level:
     def player_attack_logic(self):
         if self.attack_sprites:
             for attack_sprite in self.attack_sprites:
-                collision_sprites = pygame.sprite.spritecollide(attack_sprite, self.attackable_sprites, False)
+                collision_sprites = pygame.sprite.spritecollide(
+                    attack_sprite, self.attackable_sprites, False)
                 if collision_sprites:
                     for target_sprite in collision_sprites:
                         if target_sprite.sprite_type == "grass":
+                            pos = target_sprite.rect.center
+                            offset = pygame.math.Vector2(0, 75)
+                            for _ in range(randint(3, 6)):
+                                self.animation_player.create_grass_particles(pos - offset, [self.visible_sprites])
                             target_sprite.kill()
                         else:
-                            target_sprite.get_damage(self.player, attack_sprite.sprite_type)
+                            target_sprite.get_damage(
+                                self.player, attack_sprite.sprite_type)
 
     def damage_player(self, amount, attack_type):
         if self.player.vulnerable:
             self.player.health -= amount
             self.player.vulnerable = False
             self.player.hurt_time = pygame.time.get_ticks()
+            self.animation_player.create_particles(attack_type, self.player.rect.center, [self.visible_sprites])
+
+    def trigger_death_particles(self, pos, particle_type):
+        self.animation_player.create_particles(particle_type, pos, [self.visible_sprites])
 
     def run(self):
         # update and draw the game
@@ -139,5 +155,3 @@ class Level:
         self.visible_sprites.enemy_update(self.player)
         self.player_attack_logic()
         self.ui.display(self.player)
-        
-        
