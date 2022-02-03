@@ -1,4 +1,4 @@
-from random import choices
+from random import choices, randint
 import pygame
 from particles import ParticleEffect
 from utils import import_folder
@@ -57,7 +57,7 @@ class AnimationPlayer:
         return new_frames
 
     def create_grass_particles(self, pos, groups):
-        animation_frames = choices(self.frames['leaf'])
+        animation_frames = choices(self.frames['leaf'][randint(0, 5)])
         ParticleEffect(pos, animation_frames, groups)
 
     def create_particles(self, animation_type, pos, groups):
