@@ -26,6 +26,12 @@ HEALTH_COLOR = '#27ae60'
 ENERGY_COLOR = '#2980b9'
 UI_BORDER_COLOR_ACTIVE = 'gold'
 
+# Upgrade menu
+TEXT_COLOR_SELECTED = '#111111'
+BAR_COLOR = '#EEEEEE'
+BAR_COLOR_SELECTED = '#111111'
+UPGRADE_BG_COLOR_SELECTED = '#EEEEEE'
+
 # Weapons
 weapon_data = {
     'sword': {'cooldown': 100, 'damage': 15, 'graphic': '../graphics/weapons/sword/full.png'},

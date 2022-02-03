@@ -46,18 +46,32 @@ class Player(Entity):
 		self.stats = {
 			"health": 100,
 			"energy": 50,
-			"energy_recovery": 0.05,
 			"attack": 10,
 			"magic": 4,
 			"speed": 5,
 		}
 
+		self.max_stats = {
+			'health': 300,
+			'energy': 140,
+			'attack': 20,
+			'magic': 10,
+			'speed': 10
+		}
+
+		self.upgrade_costs = {
+			'health': 100,
+			'energy': 100,
+			'attack': 100,
+			'magic': 100,
+			'speed': 100
+		}
+
 		self.health = self.stats["health"]
 		self.energy = self.stats["energy"]
 		self.exp = 0
-		self.speed = self.stats["speed"]
 
-		self.vulnerable =True
+		self.vulnerable = True
 		self.hurt_time = None
 		self.Invurnebility_duration = 500
 
@@ -162,7 +176,6 @@ class Player(Entity):
 		if not self.vulnerable:
 			if current_time - self.hurt_time > self.Invurnebility_duration:
 				self.vulnerable = True
-			
 
 	def get_status(self):
 		# idle status
@@ -204,16 +217,21 @@ class Player(Entity):
 			self.image.set_alpha(255)
 
 	def energy_recovery(self):
-		if self.energy < self.stats["energy"]:
-			self.energy += self.stats["energy_recovery"]
+		if self.energy < self.stats['energy']:
+			self.energy += 0.01 * self.stats['magic']
 		else:
-			self.energy = self.stats["energy"]
-		
+			self.energy = self.stats['energy']
+
+	def get_value_by_index(self, index):
+		return list(self.stats.values())[index]
+
+	def get_cost_by_index(self, index):
+		return list(self.upgrade_costs.values())[index]
 
 	def update(self):
 		self.input()
 		self.cooldowns()
 		self.get_status()
 		self.animate()
-		self.move(self.speed)
+		self.move(self.stats["speed"])
 		self.energy_recovery()
