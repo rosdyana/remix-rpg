@@ -6,6 +6,8 @@ class Weapon(pygame.sprite.Sprite):
         super().__init__(groups)
         direction = player.status.split("_")[0]
 
+        self.sprite_type = "weapon"
+
         # Graphics
         if style != None:
             full_path = f"../graphics/particles/{style}/{style}.png"

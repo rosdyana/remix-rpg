@@ -22,7 +22,7 @@ UI_BORDER_COLOR = '#111111'
 TEXT_COLOR = '#EEEEEE'
 
 # UI colors
-HEALTH_COLOR = 'red'
+HEALTH_COLOR = 'green'
 ENERGY_COLOR = 'blue'
 UI_BORDER_COLOR_ACTIVE = 'gold'
 
